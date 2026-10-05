@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#2563eb">
+<title>Decision Making Coach</title>
+<style>
+:root{--bg:#f5f8ff;--card:#fff;--ink:#172033;--muted:#64748b;--primary:#2563eb;--primary2:#1d4ed8;--line:#dbe3f0;--good:#16834b;--warn:#b45309;--bad:#b91c1c;--shadow:0 8px 24px rgba(30,60,110,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}button,input,textarea,select{font:inherit}button{cursor:pointer}.app{max-width:760px;margin:auto;padding:18px 15px 40px}.hero{display:flex;align-items:center;gap:12px;margin-bottom:14px}.icon{width:52px;height:52px;border-radius:15px;background:#2563eb;display:grid;place-items:center;color:white;box-shadow:var(--shadow)}h1{font-size:25px;margin:0}h2{font-size:19px;margin:0 0 8px}h3{font-size:16px;margin:0 0 8px}.sub{color:var(--muted);font-size:14px}.tabs{display:flex;gap:7px;overflow:auto;margin:12px 0}.tab{border:1px solid var(--line);background:#fff;color:var(--muted);padding:9px 13px;border-radius:999px;white-space:nowrap}.tab.active{background:var(--primary);border-color:var(--primary);color:#fff}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:17px;margin:12px 0;box-shadow:var(--shadow)}label{display:block;font-size:13px;font-weight:700;margin:13px 0 6px}input,textarea,select{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px 12px;background:#fff;color:var(--ink);outline:none}textarea{min-height:88px;resize:vertical}input:focus,textarea:focus,select:focus{border-color:var(--primary);box-shadow:0 0 0 3px #2563eb18}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{border:0;border-radius:12px;padding:11px 15px;font-weight:750}.primary{background:var(--primary);color:#fff}.primary:hover{background:var(--primary2)}.secondary{background:#eef4ff;color:#1749a5}.ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}.danger{background:#fff0f0;color:var(--bad)}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.option{border:1px solid var(--line);border-radius:13px;padding:11px;margin:8px 0}.option .row{display:grid;grid-template-columns:1fr 80px;gap:8px;align-items:center}.criteria{border-top:1px solid var(--line);margin-top:14px;padding-top:10px}.criterion{display:grid;grid-template-columns:1fr 70px 70px;gap:7px;align-items:center;margin:8px 0}.criterion input{padding:8px}.score{font-size:28px;font-weight:800;color:var(--primary)}.result{background:#f0f6ff;border:1px solid #cfe0ff;border-radius:14px;padding:14px;margin-top:12px}.meter{height:10px;background:#e5eaf2;border-radius:20px;overflow:hidden}.meter>div{height:100%;background:var(--primary);width:0}.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;background:#edf2f7;color:#475569}.history-item{padding:12px 0;border-top:1px solid var(--line)}.history-item:first-child{border-top:0}.small{font-size:12px;color:var(--muted)}.question{font-weight:700;margin-top:10px}.bias{display:flex;gap:8px;align-items:flex-start;margin:9px 0}.bias input{width:auto;margin-top:4px}.hidden{display:none!important}.empty{text-align:center;color:var(--muted);padding:25px}.tip{border-left:4px solid var(--primary);background:#f4f8ff;padding:10px 12px;border-radius:8px;color:#334155;font-size:14px}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.criterion{grid-template-columns:1fr 62px 62px}.app{padding-left:12px;padding-right:12px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="hero">
+<div class="icon" aria-hidden="true"><svg width="31" height="31" viewBox="0 0 64 64" fill="none"><path d="M32 7v50M7 32h50" stroke="white" stroke-width="5" stroke-linecap="round"/><circle cx="32" cy="32" r="20" stroke="white" stroke-width="5"/><path d="m22 32 7 7 14-15" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<div><h1>Decision Making Coach</h1><div class="sub">Learn to make clearer, calmer, better decisions.</div></div>
+</header>
+<div class="tabs"><button class="tab active" data-tab="coach">Coach</button><button class="tab" data-tab="history">My Decisions</button><button class="tab" data-tab="learn">Learn</button></div>
+
+<section id="coach" class="view">
+<div class="card">
+<h2>1. Define the decision</h2>
+<div class="tip">Good decisions start with a clear question. Write the decision as: <b>“Should I…?”</b></div>
+<label for="decision">What are you deciding?</label>
+<textarea id="decision" placeholder="Example: Should I buy this new smartwatch?"></textarea>
+<div class="grid"><div><label for="category">Category</label><select id="category"><option>Personal</option><option>Money</option><option>Health & Fitness</option><option>Work</option><option>Technology</option><option>Relationships</option><option>Learning</option><option>Other</option></select></div><div><label for="deadline">Decision deadline</label><input id="deadline" type="date"></div></div>
+</div>
+
+<div class="card">
+<h2>2. List your options</h2>
+<div id="options"></div>
+<button class="btn secondary" id="addOption">＋ Add option</button>
+</div>
+
+<div class="card">
+<h2>3. What matters?</h2>
+<div class="sub">Rate each factor from 1–5 for importance, then score each option from 1–5.</div>
+<div id="criteria"></div>
+<div class="actions"><button class="btn secondary" id="addCriterion">＋ Add factor</button></div>
+</div>
+
+<div class="card">
+<h2>4. Slow down your thinking</h2>
+<div class="sub">Check any question that is relevant. These are designed to reduce common decision errors.</div>
+<div id="biases"></div>
+</div>
+
+<div class="card">
+<h2>5. Make the decision</h2>
+<label for="gut">My gut feeling (1–5)</label><input id="gut" type="range" min="1" max="5" value="3">
+<div class="grid"><div><label for="confidence">Confidence (1–10)</label><input id="confidence" type="number" min="1" max="10" value="7"></div><div><label for="reversible">Is it reversible?</label><select id="reversible"><option>Yes — easily</option><option>Partly</option><option>No — difficult to reverse</option></select></div></div>
+<label for="decisionNote">What will I do, and why?</label><textarea id="decisionNote" placeholder="Write your conclusion in a few sentences."></textarea>
+<div class="actions"><button class="btn primary" id="calculate">Analyse decision</button><button class="btn ghost" id="reset">Start over</button></div>
+<div id="result"></div>
+</div>
+</section>
+
+<section id="history" class="view hidden"><div class="card"><h2>My Decisions</h2><div class="sub">Saved only on this device/browser.</div><div id="historyList"></div><div class="actions"><button class="btn danger" id="clearHistory">Delete all saved decisions</button></div></div></section>
+
+<section id="learn" class="view hidden"><div class="card"><h2>Decision skills</h2><div class="tip"><b>1. Separate facts from assumptions.</b><br>Write down what you know, then identify what you are guessing.</div><div class="tip" style="margin-top:9px"><b>2. Compare alternatives.</b><br>A decision is stronger when you consider at least two realistic alternatives.</div><div class="tip" style="margin-top:9px"><b>3. Consider the downside.</b><br>Ask: “What is the worst realistic outcome, and can I handle it?”</div><div class="tip" style="margin-top:9px"><b>4. Avoid rushing.</b><br>Important decisions deserve enough time to avoid emotion-driven choices.</div><div class="tip" style="margin-top:9px"><b>5. Review your decisions.</b><br>After some time, ask what happened. The goal is not perfect predictions—it is better thinking.</div><h3 style="margin-top:18px">A simple rule</h3><p>For small, reversible decisions: decide quickly. For important, difficult-to-reverse decisions: slow down, gather evidence, compare options and check your assumptions.</p></div></section>
+</div>
+<script>
+const $=id=>document.getElementById(id);const KEY='dmc_decisions_v1';
+let optionCount=0, criterionCount=0;
+const biasQs=[
+['facts','What facts could I verify before deciding?'],
+['alternative','What is one reasonable alternative I have not considered?'],
+['loss','Am I giving too much weight to avoiding a loss?'],
+['emotion','Would I make the same decision if I were calm tomorrow?'],
+['future','What could change my mind later?']
+];
+function addOption(name=''){optionCount++;const id=optionCount;const d=document.createElement('div');d.className='option';d.dataset.id=id;d.innerHTML=`<div class="row"><input class="opt-name" placeholder="Option ${id}" value="${esc(name)}"><button class="btn danger remove-opt">Remove</button></div><label>Short description</label><input class="opt-desc" placeholder="What does this option involve?">`;d.querySelector('.remove-opt').onclick=()=>{d.remove();renderCriteriaInputs()};$('options').appendChild(d);renderCriteriaInputs()}
+function addCriterion(name=''){criterionCount++;const id=criterionCount;const d=document.createElement('div');d.className='criterion';d.dataset.id=id;d.innerHTML=`<input class="crit-name" placeholder="Factor ${id}" value="${esc(name)}"><input class="crit-weight" type="number" min="1" max="5" value="3" title="Importance"><button class="btn danger remove-crit">×</button>`;d.querySelector('.remove-crit').onclick=()=>{d.remove();renderCriteriaInputs()};$('criteria').appendChild(d);renderCriteriaInputs()}
+function renderCriteriaInputs(){document.querySelectorAll('.criterion').forEach(c=>{let existing=c.querySelector('.scores');if(existing)existing.remove();const box=document.createElement('div');box.className='scores';box.style.gridColumn='1 / -1';box.innerHTML='';document.querySelectorAll('.option').forEach(o=>{const row=document.createElement('div');row.style.display='grid';row.style.gridTemplateColumns='1fr 70px';row.style.gap='7px';row.style.margin='6px 0';row.innerHTML=`<span class="small">${esc(o.querySelector('.opt-name').value||'Option')}</span><input class="score-input" type="number" min="1" max="5" value="3" data-option="${o.dataset.id}">`;box.appendChild(row)});c.appendChild(box)})}
+function esc(s){return String(s||'').replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]))}
+function initBiases(){biasQs.forEach(([id,q])=>{const d=document.createElement('label');d.className='bias';d.innerHTML=`<input type="checkbox" data-bias="${id}"><span>${q}</span>`;$('biases').appendChild(d)})}
+function analyse(){const decision=$('decision').value.trim();if(!decision){alert('Please enter the decision you are trying to make.');$('decision').focus();return}const opts=[...document.querySelectorAll('.option')].map(o=>({id:o.dataset.id,name:o.querySelector('.opt-name').value.trim()||'Unnamed option'})).filter(o=>o.name);if(opts.length<2){alert('Add at least two options.');return}const crit=[...document.querySelectorAll('.criterion')].map(c=>({name:c.querySelector('.crit-name').value.trim()||'Factor',weight:+c.querySelector('.crit-weight').value||1,scores:[...c.querySelectorAll('.score-input')].map(x=>+x.value||1)}));let totals=opts.map((o,i)=>({name:o.name,total:crit.reduce((s,c)=>s+c.weight*(c.scores[i]||1),0)}));totals.sort((a,b)=>b.total-a.total);const max=totals[0].total;const min=Math.min(...totals.map(x=>x.total));const gut=+$('gut').value,conf=+$('confidence').value;const checked=[...document.querySelectorAll('[data-bias]:checked')].length;const clarity=Math.round(Math.min(100,Math.max(0,50+(max-min)*4+(conf*3)+checked*2)));$('result').innerHTML=`<div class="result"><div class="small">RECOMMENDED BY YOUR SCORING</div><div class="score">${esc(totals[0].name)}</div><p>Weighted score: <b>${max}</b>${totals[1]?` · Next option: <b>${esc(totals[1].name)}</b> (${totals[1].total})`:''}</p><div class="meter"><div style="width:${clarity}%"></div></div><p class="small">Decision clarity indicator: ${clarity}/100. This is a thinking aid, not a prediction of the future.</p><p><b>Before you commit:</b> ${gut>=4?'Your gut feeling is positive, but check the evidence.':gut<=2?'Your gut feeling is negative, so check whether fear or risk is driving it.':'Your gut feeling is neutral—let the evidence carry more weight.'} ${$('reversible').value.startsWith('No')?'Because this is difficult to reverse, consider a final pause before acting.':''}</p><button class="btn primary" id="saveDecision">Save this decision</button></div>`;$('saveDecision').onclick=()=>saveDecision(totals[0].name,totals);}
+function saveDecision(recommendation,totals){const data=JSON.parse(localStorage.getItem(KEY)||'[]');data.unshift({id:Date.now(),date:new Date().toLocaleString(),decision:$('decision').value,category:$('category').value,recommendation,confidence:+$('confidence').value,options:totals,note:$('decisionNote').value});localStorage.setItem(KEY,JSON.stringify(data));renderHistory();alert('Decision saved on this device.');}
+function renderHistory(){const data=JSON.parse(localStorage.getItem(KEY)||'[]');if(!data.length){$('historyList').innerHTML='<div class="empty">No saved decisions yet.</div>';return}$('historyList').innerHTML=data.map(x=>`<div class="history-item"><b>${esc(x.decision)}</b><div class="small">${esc(x.date)} · ${esc(x.category)}</div><p>Recommended: <b>${esc(x.recommendation)}</b> · Confidence ${x.confidence}/10</p>${x.note?`<div class="small">${esc(x.note)}</div>`:''}<button class="btn danger" style="margin-top:7px" onclick="deleteDecision(${x.id})">Delete</button></div>`).join('')}
+function deleteDecision(id){const data=JSON.parse(localStorage.getItem(KEY)||'[]').filter(x=>x.id!==id);localStorage.setItem(KEY,JSON.stringify(data));renderHistory()}
+function reset(){if(!confirm('Start a new decision? Current entries will be cleared from the form.'))return;$('decision').value='';$('deadline').value='';$('decisionNote').value='';$('gut').value=3;$('confidence').value=7;$('result').innerHTML='';$('options').innerHTML='';$('criteria').innerHTML='';optionCount=criterionCount=0;addOption();addOption();addCriterion();addCriterion();}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));$(b.dataset.tab).classList.remove('hidden');if(b.dataset.tab==='history')renderHistory()});$('addOption').onclick=()=>addOption();$('addCriterion').onclick=()=>addCriterion();$('calculate').onclick=analyse;$('reset').onclick=reset;$('clearHistory').onclick=()=>{if(confirm('Delete all saved decisions from this device?')){localStorage.removeItem(KEY);renderHistory()}};initBiases();addOption();addOption();addCriterion('Cost');addCriterion('Benefit');addCriterion('Risk');renderHistory();
+</script>
+</body></html>
